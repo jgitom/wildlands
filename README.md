@@ -1,5 +1,7 @@
 # Wildlands — Survival Strike
 
+**Live:** https://jgitom.github.io/wildlands/
+
 A single-file open-world survival FPS built with Three.js. No build step, no assets, no backend — just `index.html`.
 
 ## Play
