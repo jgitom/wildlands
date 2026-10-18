@@ -2,11 +2,11 @@
 
 **Live:** https://jgitom.github.io/wildlands/
 
-A single-file open-world survival FPS built with Three.js. No build step, no assets, no backend — just `index.html`.
+An open-world survival FPS built with Three.js. No build step, no backend, and no remote assets — the game ships as `index.html` plus a vendored Three.js build.
 
 ## Play
 
-Open `index.html` (or serve the folder) and click **ENTER WILDLANDS**.
+Serve the folder (see below) and click **ENTER WILDLANDS**. If you have a saved run, the main button becomes **CONTINUE — DAY NN**.
 
 | Input | Action |
 | --- | --- |
@@ -17,6 +17,7 @@ Open `index.html` (or serve the folder) and click **ENTER WILDLANDS**.
 | `E` | Interact — chop, mine, forage, loot, cook, drink, harvest |
 | `C` | Crafting panel |
 | `F` / `B` | Eat / use bandage |
+| `O` | Settings |
 | `1` `2` `3` | Axe · Bow · Torch |
 | `Esc` | Pause |
 
@@ -29,7 +30,10 @@ Open `index.html` (or serve the folder) and click **ENTER WILDLANDS**.
 - **Gathering & crafting** — wood, stone, fiber, hide; stone axe, bow, arrows, bandages, torch, leather vest.
 - **Combat & hunting** — bare hands, axe melee, bow projectiles, deer, wolves, and night raiders.
 - **Exploration aids** — live circular minimap with villages, game and hostiles.
-- **Persistence** — best survival day is stored in `localStorage`.
+- **Synthesized audio** — footsteps, chopping, mining, bow, impacts, fire, UI, plus wind, birds and wolf howls. No audio files are bundled.
+- **Save / continue** — the run (position, stats, inventory, tools, day/time, harvested resources, crates, wildlife) autosaves every 12 s, on pause, and on page hide. The best day is tracked separately.
+- **Settings** — mouse sensitivity, master volume, FOV, shadows, fullscreen; persisted in `localStorage`.
+- **No remote dependencies** — Three.js is vendored under `vendor/`, so the game runs offline once served.
 
 ## Run locally
 
@@ -38,7 +42,7 @@ python3 -m http.server 8089
 # then open http://localhost:8089
 ```
 
-Three.js is loaded from jsDelivr (`three@0.180.0`), so the page needs a network connection.
+Serve the folder rather than double-clicking `index.html`: browsers block local ES-module imports over `file://`. Any static host works; there is no network dependency.
 
 ## Deploy (GitHub Pages)
 
@@ -51,6 +55,15 @@ Three.js is loaded from jsDelivr (`three@0.180.0`), so the page needs a network 
 ## Layout
 
 ```
-index.html                 the whole game (UI, world, gameplay)
-archive/wave-shooter.html  previous wave-based build, kept for reference
+index.html                    the whole game (UI, world, gameplay, audio, save)
+vendor/three.module.min.js    Three.js r180 (MIT)
+vendor/three.core.min.js      Three.js core (imported by the module build)
+vendor/THREE-LICENSE.txt      Three.js MIT license
+archive/wave-shooter.html     previous wave-based build, kept for reference
 ```
+
+## Credits & licensing
+
+- **Three.js** © three.js authors, MIT — see `vendor/THREE-LICENSE.txt`.
+- All game code, geometry, UI, and synthesized audio in this repository are original; no external art, music, or font files are included.
+- To publish on itch.io, upload a zip containing `index.html` and `vendor/` with `index.html` at the root.
